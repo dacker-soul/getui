@@ -1,3 +1,4 @@
+// 公共方法
 package getuiv2
 
 import (
@@ -22,7 +23,7 @@ func Signature(appKey string, masterSecret string) (string, string) {
 }
 
 //post请求
-func SendPost(ctx context.Context, bodyByte []byte, url, action, token string) (string, error) {
+func RestFulRequest(ctx context.Context, bodyByte []byte, url, action, token string) (string, error) {
 	//创建客户端实例
 	client := &http.Client{
 		Timeout: 10 * time.Second,

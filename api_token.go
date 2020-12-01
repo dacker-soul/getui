@@ -1,3 +1,4 @@
+// 获取token、删除token
 package getuiv2
 
 import (
@@ -42,13 +43,13 @@ func GetToken(ctx context.Context, config GeTuiConfig) (TokenResult, error) {
 		AppKey:    config.AppKey,
 	}
 
-	url := API_URL + config.AppId + "/auth"
+	url := ApiUrl + config.AppId + "/auth"
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return tokenResult, err
 	}
 
-	result, err := SendPost(ctx, bodyByte, url, "POST", "")
+	result, err := RestFulRequest(ctx, bodyByte, url, "POST", "")
 	if err != nil {
 		return tokenResult, err
 	}
@@ -63,9 +64,9 @@ func GetToken(ctx context.Context, config GeTuiConfig) (TokenResult, error) {
 // 删除token，为防止token被滥用或泄露，开发者可以调用此接口主动使token失效
 func DelToken(ctx context.Context, token string, config GeTuiConfig) (PublicResult, error) {
 	publicResult := PublicResult{}
-	url := API_URL + config.AppId + "/auth/" + token
+	url := ApiUrl + config.AppId + "/auth/" + token
 	fmt.Println("url:", url)
-	result, err := SendPost(ctx, []byte{}, url, "DELETE", "")
+	result, err := RestFulRequest(ctx, []byte{}, url, "DELETE", "")
 	if err != nil {
 		return publicResult, err
 	}
