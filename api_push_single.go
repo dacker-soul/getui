@@ -6,13 +6,31 @@ import (
 	"encoding/json"
 )
 
+// 单推参数
 type PushSingleParam struct {
-	RequestId   string `json:"requestid"` // 请求唯一标识号，10-32位之间；如果request_id重复，会导致消息丢失
-	Audience    *Cid   // cid数组，只能填一个cid
-	Settings    *Settings
-	PushMessage *PushMessage
-	PushChannel *PushChannel
+	RequestId   string       `json:"request_id"`   // 必须字段，请求唯一标识号，10-32位之间；如果request_id重复，会导致消息丢失 例如：strconv.FormatInt(time.Now().UnixNano(), 10)
+	Audience    *Cid         `json:"audience"`     // 必须字段，cid数组，只能填一个cid
+	Settings    *Settings    `json:"settings"`     // 非必须，推送条件设置
+	PushMessage *PushMessage `json:"push_message"` // 必须字段，个推推送消息参数
+	PushChannel *PushChannel `json:"push_channel"` // 非必须，厂商推送消息参数，包含ios消息参数，android厂商消息参数
 }
+
+//
+type PushSingleResult struct {
+	PublicResult
+	Data interface{} `json:"data"`
+}
+
+// 返回示例
+//{
+//	"code": 0,
+//	"msg": "",
+//	"data": {
+//	"$taskid": {
+//		"$cid":"$status"
+//		}
+//	}
+//}
 
 // 执行cid单推
 func PushSingleByCid(ctx context.Context, config GeTuiConfig, token string, param *PushSingleParam) (*PushSingleResult, error) {
