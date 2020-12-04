@@ -26,13 +26,13 @@ type Cid struct {
 
 // 推送条件设置
 type Settings struct {
-	TTL      int64     `json:"ttl"`      // 非必须，默认一小时，消息离线时间设置，单位毫秒，-1表示不设离线，-1 ～ 3 * 24 * 3600 * 1000(3天)之间
-	Strategy *Strategy `json:"strategy"` //  非必须，厂商通道策略
+	TTL      int64     `json:"ttl,omitempty"`      // 非必须，默认一小时，消息离线时间设置，单位毫秒，-1表示不设离线，-1 ～ 3 * 24 * 3600 * 1000(3天)之间
+	Strategy *Strategy `json:"strategy,omitempty"` //  非必须，厂商通道策略
 }
 
 // 厂商通道策略
 type Strategy struct {
-	Default int `json:"default"`
+	Default int `json:"default,omitempty"`
 	/*
 	 * default字段，非必须，默认值为 1
 	 * 默认所有通道的策略选择1-4
@@ -42,30 +42,30 @@ type Strategy struct {
 	 * 4: 表示该消息优先从厂商通道下发，若消息内容在厂商通道代发失败后会从个推通道下发。
 	 * 其中名称可填写: ios、st、hw、xm、vv、mz、op，
 	 */
-	Ios int `json:"ios"` // 非必须，ios通道策略1-4，表示含义同上，要推送ios通道，需要在个推开发者中心上传ios证书，建议填写2或4，否则可能会有消息不展示的问题
-	St  int `json:"st"`  // 非必须，通道策略1-4，表示含义同上，需要开通st厂商使用该通道推送消息
-	Hw  int `json:"hw"`  // 非必须，通道策略1-4，表示含义同上
-	Xm  int `json:"xm"`  // 非必须，通道策略1-4，表示含义同上
-	Vv  int `json:"vv"`  // 非必须，通道策略1-4，表示含义同上
-	Mz  int `json:"mz"`  // 非必须，通道策略1-4，表示含义同上
-	Op  int `json:"op"`  // 非必须，通道策略1-4，表示含义同上
+	Ios int `json:"ios,omitempty"` // 非必须，ios通道策略1-4，表示含义同上，要推送ios通道，需要在个推开发者中心上传ios证书，建议填写2或4，否则可能会有消息不展示的问题
+	St  int `json:"st,omitempty"`  // 非必须，通道策略1-4，表示含义同上，需要开通st厂商使用该通道推送消息
+	Hw  int `json:"hw,omitempty"`  // 非必须，通道策略1-4，表示含义同上
+	Xm  int `json:"xm,omitempty"`  // 非必须，通道策略1-4，表示含义同上
+	Vv  int `json:"vv,omitempty"`  // 非必须，通道策略1-4，表示含义同上
+	Mz  int `json:"mz,omitempty"`  // 非必须，通道策略1-4，表示含义同上
+	Op  int `json:"op,omitempty"`  // 非必须，通道策略1-4，表示含义同上
 }
 
 // 个推推送消息参数
 type PushMessage struct {
-	Duration string `json:"duration"`
+	Duration string `json:"duration,omitempty"`
 	/*
 	 * duration字段，非必须
 	 * 手机端通知展示时间段，格式为毫秒时间戳段，两个时间的时间差必须大于10分钟
 	 * 例如："1590547347000-1590633747000"
 	 */
-	Notification *Notification `json:"notification"` // 非必须，通知消息内容，仅支持安卓系统，iOS系统不展示个推通知消息，与transmission、revoke三选一，都填写时报错
-	Transmission string        `json:"transmission"`
+	Notification *Notification `json:"notification,omitempty"` // 非必须，通知消息内容，仅支持安卓系统，iOS系统不展示个推通知消息，与transmission、revoke三选一，都填写时报错
+	Transmission string        `json:"transmission,omitempty"`
 	/*
 	 * transmission字段，非必须，【建议选这个模式】
 	 * 穿透传消息内容，安卓和iOS均支持，与notification、revoke 三选一，都填写时报错，长度 ≤ 3072
 	 */
-	Revoke *Revoke `json:"revoke"` // 非必须，撤回消息时使用，与notification、transmission三选一，都填写时报错
+	Revoke *Revoke `json:"revoke,omitempty"` // 非必须，撤回消息时使用，与notification、transmission三选一，都填写时报错
 }
 
 // 通知消息内容，仅支持安卓系统(不建议选这个，建议用穿透模板【transmission】)
@@ -93,7 +93,7 @@ type Notification struct {
 	 * 3：有声音，无振动，锁屏和通知栏中都显示，通知唤醒屏幕;
 	 * 4：有声音，有振动，亮屏下通知悬浮展示，锁屏通知以默认形式展示且唤醒屏幕;
 	 */
-	ClickType string `json:"click_type"`
+	ClickType string `json:"click_type,omitempty"`
 	/*
 	 * click_type,必须，默认值：无
 	 * 点击通知后续动作，目前支持以下后续动作：
@@ -126,13 +126,13 @@ type Notification struct {
 	 */
 
 	// options为push_channel厂商通道中安卓专有
-	Options *Options `json:"options"` // 第三方厂商通知扩展内容
+	Options *Options `json:"options,omitempty"` // 第三方厂商通知扩展内容
 
 }
 
 type Options struct {
-	Constraint string `json:"constraint"` // 非必须，扩展内容对应厂商通道设置如：HW,MZ,...
-	Key        string `json:"key"`
+	Constraint string `json:"constraint,omitempty"` // 非必须，扩展内容对应厂商通道设置如：HW,MZ,...
+	Key        string `json:"key,omitempty"`
 	/*
 	 * Key,必须，默认值：无
 	 * 厂商内容扩展字段,单个厂商特有字段
@@ -142,7 +142,7 @@ type Options struct {
 	 * vv的消息分类classification， 0 代表运营消息，1代表系统消息，不填默认为0
 	 * xm的channel:目前只有op和xm支持
 	 */
-	Value string `json:"value"`
+	Value string `json:"value,omitempty"`
 	/*
 	 * value,必须，默认值：无
 	 * value的设置根据key值决定。例如
@@ -154,26 +154,26 @@ type Options struct {
 
 // 撤回消息时使用，与notification、transmission三选一，都填写时报错
 type Revoke struct {
-	OldTaskId string `json:"old_task_id"` // 必须，需要撤回的taskId
-	Force     bool   `json:"force"`       // 非必须，【小心使用】在没有找到对应的taskId，是否把对应appId下所有的通知都撤回
+	OldTaskId string `json:"old_task_id"`     // 必须，需要撤回的taskId
+	Force     bool   `json:"force,omitempty"` // 非必须，【小心使用】在没有找到对应的taskId，是否把对应appId下所有的通知都撤回
 }
 
 // 厂商推送消息参数，包含ios消息参数，android厂商消息参数
 type PushChannel struct {
-	Ios     *IosChannel     `json:"ios"`     // 非必须，ios通道推送消息内容
-	Android *AndroidChannel `json:"android"` // 非必须，android通道推送消息内容
+	Ios     *IosChannel     `json:"ios,omitempty"`     // 非必须，ios通道推送消息内容
+	Android *AndroidChannel `json:"android,omitempty"` // 非必须，android通道推送消息内容
 }
 
 // ios厂商通道消息
 type IosChannel struct {
 	// 具体参数含义详见苹果APNs文档
 	// https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/PayloadKeyReference.html
-	Type           string        `json:"type"`             // 非必须，默认值：notify，voip：voip语音推送，notify：apns通知消息
-	Aps            *Aps          `json:"aps"`              // 推送通知消息内容
-	AutoBadge      string        `json:"auto_badge"`       // 非必须，用于计算icon上显示的数字，还可以实现显示数字的自动增减，如“+1”、 “-1”、 “1” 等，计算结果将覆盖badge
-	PayLoad        string        `json:"payload"`          // 非必须，增加自定义的数据
-	Multimedia     *[]Multimedia `json:"multimedia"`       // 非必须，该字段为Array类型,设置多媒体
-	ApnsCollapseId string        `json:"apns-collapse-id"` // 非必须，使用相同的apns-collapse-id可以覆盖之前的消息
+	Type           string        `json:"type,omitempty"`             // 非必须，默认值：notify，voip：voip语音推送，notify：apns通知消息
+	Aps            *Aps          `json:"aps,omitempty"`              // 推送通知消息内容
+	AutoBadge      string        `json:"auto_badge,omitempty"`       // 非必须，用于计算icon上显示的数字，还可以实现显示数字的自动增减，如“+1”、 “-1”、 “1” 等，计算结果将覆盖badge
+	PayLoad        string        `json:"payload,omitempty"`          // 非必须，增加自定义的数据
+	Multimedia     *[]Multimedia `json:"multimedia,omitempty"`       // 非必须，该字段为Array类型,设置多媒体
+	ApnsCollapseId string        `json:"apns-collapse-id,omitempty"` // 非必须，使用相同的apns-collapse-id可以覆盖之前的消息
 }
 
 // 推送通知消息内容
@@ -193,24 +193,24 @@ type Aps struct {
 
 // 通知消息
 type Alert struct {
-	Title           string   `json:"title"`             // 非必须，通知消息标题
-	Body            string   `json:"body"`              // 非必须，通知消息内容
-	ActionLocKey    string   `json:"action-loc-key"`    // 非必须，（用于多语言支持）指定执行按钮所使用的Localizable.strings
-	LocKey          string   `json:"loc-key"`           // 非必须，（用于多语言支持）指定Localizable.strings文件中相应的key
-	LocArgs         []string `json:"loc-args"`          // 非必须，如果loc-key中使用了占位符，则在loc-args中指定各参数
-	LaunchImage     string   `json:"launch-image"`      // 非必须，指定启动界面图片名
-	TitleLocKey     string   `json:"title-loc-key"`     // 非必须，(用于多语言支持）对于标题指定执行按钮所使用的Localizable.strings,仅支持iOS8.2以上版本
-	TitleLocArgs    []string `json:"title-loc-args"`    // 非必须，对于标题,如果loc-key中使用的占位符，则在loc-args中指定各参数,仅支持iOS8.2以上版本
-	SubTitle        string   `json:"sub_title"`         // 非必须，通知子标题,仅支持iOS8.2以上版本
-	SubTitleLocKey  string   `json:"subtitle-loc-key"`  // 非必须，当前本地化文件中的子标题字符串的关键字,仅支持iOS8.2以上版本
-	SubTitleLocArgs []string `json:"subtitle-loc-args"` //当前本地化子标题内容中需要置换的变量参数 ,仅支持iOS8.2以上版本
+	Title           string   `json:"title,omitempty"`             // 非必须，通知消息标题
+	Body            string   `json:"body,omitempty"`              // 非必须，通知消息内容
+	ActionLocKey    string   `json:"action-loc-key,omitempty"`    // 非必须，（用于多语言支持）指定执行按钮所使用的Localizable.strings
+	LocKey          string   `json:"loc-key,omitempty"`           // 非必须，（用于多语言支持）指定Localizable.strings文件中相应的key
+	LocArgs         []string `json:"loc-args,omitempty"`          // 非必须，如果loc-key中使用了占位符，则在loc-args中指定各参数
+	LaunchImage     string   `json:"launch-image,omitempty"`      // 非必须，指定启动界面图片名
+	TitleLocKey     string   `json:"title-loc-key,omitempty"`     // 非必须，(用于多语言支持）对于标题指定执行按钮所使用的Localizable.strings,仅支持iOS8.2以上版本
+	TitleLocArgs    []string `json:"title-loc-args,omitempty"`    // 非必须，对于标题,如果loc-key中使用的占位符，则在loc-args中指定各参数,仅支持iOS8.2以上版本
+	SubTitle        string   `json:"sub_title,omitempty"`         // 非必须，通知子标题,仅支持iOS8.2以上版本
+	SubTitleLocKey  string   `json:"subtitle-loc-key,omitempty"`  // 非必须，当前本地化文件中的子标题字符串的关键字,仅支持iOS8.2以上版本
+	SubTitleLocArgs []string `json:"subtitle-loc-args,omitempty"` // 非必须，当前本地化子标题内容中需要置换的变量参数 ,仅支持iOS8.2以上版本
 }
 
 // 多媒体设置,最多可设置3个子项
 type Multimedia struct {
-	Url      string `json:"url"`       // 必须，多媒体资源地址
-	Type     int    `json:"type"`      // 必须，资源类型（1.图片，2.音频，3.视频）
-	OnlyWifi bool   `json:"only_wifi"` // 非必须，是否只在wifi环境下加载，如果设置成true,但未使用wifi时，会展示成普通通知
+	Url      string `json:"url"`                 // 必须，多媒体资源地址
+	Type     int    `json:"type"`                // 必须，资源类型（1.图片，2.音频，3.视频）
+	OnlyWifi bool   `json:"only_wifi,omitempty"` // 非必须，是否只在wifi环境下加载，如果设置成true,但未使用wifi时，会展示成普通通知
 }
 
 // Android厂商通道消息

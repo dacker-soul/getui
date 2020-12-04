@@ -18,7 +18,7 @@ type PushSingleParam struct {
 //
 type PushSingleResult struct {
 	PublicResult
-	Data interface{} `json:"data"`
+	Data map[string]map[string]string `json:"data"`
 }
 
 // 返回示例
