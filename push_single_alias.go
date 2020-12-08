@@ -1,4 +1,4 @@
-// 向单个用户推送消息 By别名
+// 别名单推
 package getuiv2
 
 import (
@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 )
 
-// 单推ByAlias参数
+// 别名单推参数
 type PushSingleAliasParam struct {
 	RequestId   string       `json:"request_id"`   // 必须字段，请求唯一标识号，10-32位之间；如果request_id重复，会导致消息丢失 例如：strconv.FormatInt(time.Now().UnixNano(), 10)
 	Audience    *Audience    `json:"audience"`     // 必须字段，别名数组，只能填一个别名
@@ -15,13 +15,13 @@ type PushSingleAliasParam struct {
 	PushChannel *PushChannel `json:"push_channel"` // 非必须，厂商推送消息参数，包含ios消息参数，android厂商消息参数
 }
 
-// 单推ByAlias返回
+// 别名单推返回
 type PushSingleAliasResult struct {
 	PublicResult
 	Data map[string]map[string]string `json:"data"`
 }
 
-// 执行单推别名
+// 别名单推
 func PushSingleByAlias(ctx context.Context, config GeTuiConfig, token string, param *PushSingleAliasParam) (*PushSingleAliasResult, error) {
 
 	url := ApiUrl + config.AppId + "/push/single/alias"

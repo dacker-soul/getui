@@ -1,4 +1,4 @@
-// Cid批量推送消息
+// cid批量推送消息
 package getuiv2
 
 import (
@@ -6,19 +6,19 @@ import (
 	"encoding/json"
 )
 
-// 单推ByAlias参数
+// cid批量单推参数
 type PushSingleBatchCidParam struct {
 	IsAsync bool               `json:"is_async"` // 非必须,默认值:false,是否异步推送，异步推送不会返回data,is_async为false时返回data
 	MsgList []*PushSingleParam `json:"msg_list"` // 必须,默认值:无，消息内容，数组长度不大于 200
 }
 
-// 单推ByAlias返回
+// cid批量单推返回
 type PushSingleBatchCidResult struct {
 	PublicResult
 	Data map[string]map[string]string `json:"data"`
 }
 
-// 执行单推别名
+// cid批量单推
 func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string, param *PushSingleBatchCidParam) (*PushSingleBatchCidResult, error) {
 
 	url := ApiUrl + config.AppId + "/push/single/alias"
