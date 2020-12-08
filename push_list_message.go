@@ -8,7 +8,7 @@ import (
 
 // 创建消息体参数
 type PushListMessageParam struct {
-	RequestId   string       `json:"request_id"`   // 非必须，请求唯一标识号，10-32位之间；如果request_id重复，会导致消息丢失 例如：strconv.FormatInt(time.Now().UnixNano(), 10)
+	RequestId   string       `json:"request_id"`   // 非必须，请求唯一标识号，10-32位之间；如果request_id重复，会导致消息丢失
 	GroupName   string       `json:"group_name"`   // 非必须，任务组名
 	Settings    *Settings    `json:"settings"`     // 非必须，推送条件设置
 	PushMessage *PushMessage `json:"push_message"` // 必须字段，个推推送消息参数

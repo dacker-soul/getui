@@ -46,8 +46,8 @@ type PublicResult struct {
 }
 
 type Audience struct {
-	Cid   []string `json:"cid"`   // cid数组，只能填一个cid
-	Alias []string `json:"alias"` // 别名数组，只能填一个别名
+	Cid   []string `json:"cid,omitempty"`   // cid数组，单推只能填一个cid，批量推可以填写多个（数组长度小于200）
+	Alias []string `json:"alias,omitempty"` // 别名数组，单推只能填一个别名，批量推可以填写多个（数组长度小于200）
 }
 
 // clientId
@@ -57,8 +57,10 @@ type Cid struct {
 
 // 推送条件设置
 type Settings struct {
-	TTL      int64     `json:"ttl,omitempty"`      // 非必须，默认一小时，消息离线时间设置，单位毫秒，-1表示不设离线，-1 ～ 3 * 24 * 3600 * 1000(3天)之间
-	Strategy *Strategy `json:"strategy,omitempty"` // 非必须，默认值：{"strategy":{"default":1}}，厂商通道策略
+	TTL          int64     `json:"ttl,omitempty"`           // 非必须，默认一小时，消息离线时间设置，单位毫秒，-1表示不设离线，-1 ～ 3 * 24 * 3600 * 1000(3天)之间
+	Strategy     *Strategy `json:"strategy,omitempty"`      // 非必须，默认值：{"strategy":{"default":1}}，厂商通道策略
+	Speed        int       `json:"speed,omitempty"`         // 非必须，定速推送，例如100，个推控制下发速度在100条/秒左右，0表示不限速
+	ScheduleTime int64     `json:"schedule_time,omitempty"` // 非必须，定时推送时间，必须是7天内的时间，格式：毫秒时间戳
 }
 
 // 厂商通道策略
