@@ -13,10 +13,41 @@ type GeTuiConfig struct {
 	MasterSecret string `toml:"master_secret"`
 }
 
-// 公共返回结构
+/*
+ * 公共返回结构示例
+ * {
+ *	 "code": 0,
+ *	 "msg": "",
+ *	 "data": {
+ *		 "$taskid": {
+ *			 "$cid":"$status"
+ *		 }
+ * 	 }
+ * }
+ *
+ * {
+ *	 "code": 0,
+ *	 "msg": "",
+ *	 "data": {
+ *		 "$taskid": ""
+ * 	 }
+ * }
+ *
+ * $taskid:任务编号
+ * $cid:App的用户唯一标识
+ * $status:
+ * successed_offline: 离线下发(包含厂商通道下发)
+ * successed_online: 在线下发
+ * successed_ignore: 最近90天内不活跃用户不下发
+ */
 type PublicResult struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
+}
+
+type Audience struct {
+	Cid   []string `json:"cid"`   // cid数组，只能填一个cid
+	Alias []string `json:"alias"` // 别名数组，只能填一个别名
 }
 
 // clientId
