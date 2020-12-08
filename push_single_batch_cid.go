@@ -19,7 +19,7 @@ type PushSingleBatchCidResult struct {
 }
 
 // 执行单推别名
-func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string, param *PushSingleAliasParam) (*PushSingleAliasResult, error) {
+func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string, param *PushSingleBatchCidParam) (*PushSingleBatchCidResult, error) {
 
 	url := ApiUrl + config.AppId + "/push/single/alias"
 	bodyByte, err := json.Marshal(param)
@@ -32,7 +32,7 @@ func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string,
 		return nil, err
 	}
 
-	var pushSingleResult *PushSingleAliasResult
+	var pushSingleResult *PushSingleBatchCidResult
 	if err := json.Unmarshal([]byte(result), &pushSingleResult); err != nil {
 		return nil, err
 	}
