@@ -45,14 +45,20 @@ type PublicResult struct {
 	Msg  string `json:"msg"`
 }
 
+// 推送目标用户
 type Audience struct {
-	Cid   []string `json:"cid,omitempty"`   // cid数组，单推只能填一个cid，批量推可以填写多个（数组长度小于200）
-	Alias []string `json:"alias,omitempty"` // 别名数组，单推只能填一个别名，批量推可以填写多个（数组长度小于200）
+	Cid           []string `json:"cid,omitempty"`             // cid数组，单推只能填一个cid，批量推可以填写多个（数组长度小于200）
+	Alias         []string `json:"alias,omitempty"`           // 别名数组，单推只能填一个别名，批量推可以填写多个（数组长度小于200）
+	Tag           []*Tag   `json:"tag,omitempty"`             // 推送条件
+	FastCustomTag string   `json:"fast_custom_tag,omitempty"` // 使用用户标签筛选目标用户
 }
 
-// clientId
-type Cid struct {
-	Cid []string `json:"cid"`
+type Tag struct {
+	Key     string   `json:"key"`      // 必须字段，默认值：无，查询条件 phone_type 手机类型; region 省市; custom_tag 用户标签; portrait 个推用户画像使用编码
+	Values  []string `json:"values"`   // 必须字段，默认值：无，查询条件值列表，其中 手机型号使用android和ios； 省市使用编号，
+	OptType string   `json:"opt_type"` // 必须字段，默认值：无，or(或),and(与),not(非)，values间的交并补操作
+	// 不同key之间是交集，同一个key之间是根据opt_type操作
+	// eg. 需要发送给城市在A,B,C里面，没有设置tagtest标签，手机型号为android的用户，用条件交并补功能可以实现，city(A|B|C) && !tag(tagtest) && phonetype(android)
 }
 
 // 推送条件设置
