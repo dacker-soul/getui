@@ -21,7 +21,7 @@ type PushSingleBatchCidResult struct {
 // cid批量单推
 func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string, param *PushSingleBatchCidParam) (*PushSingleBatchCidResult, error) {
 
-	url := ApiUrl + config.AppId + "/push/single/alias"
+	url := ApiUrl + config.AppId + "/push/single/batch/cid"
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return nil, err
@@ -32,10 +32,10 @@ func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string,
 		return nil, err
 	}
 
-	var pushSingleResult *PushSingleBatchCidResult
-	if err := json.Unmarshal([]byte(result), &pushSingleResult); err != nil {
+	var push *PushSingleBatchCidResult
+	if err := json.Unmarshal([]byte(result), &push); err != nil {
 		return nil, err
 	}
 
-	return pushSingleResult, err
+	return push, err
 }

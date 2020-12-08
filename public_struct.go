@@ -41,7 +41,7 @@ type GeTuiConfig struct {
  * successed_ignore: 最近90天内不活跃用户不下发
  */
 type PublicResult struct {
-	Code int    `json:"code"`
+	Code int    `json:"code"` // code返回码，0为成功，其他请看http://docs.getui.com/getui/server/rest_v2/code/?id=doc-title-1
 	Msg  string `json:"msg"`
 }
 
@@ -58,7 +58,7 @@ type Cid struct {
 // 推送条件设置
 type Settings struct {
 	TTL      int64     `json:"ttl,omitempty"`      // 非必须，默认一小时，消息离线时间设置，单位毫秒，-1表示不设离线，-1 ～ 3 * 24 * 3600 * 1000(3天)之间
-	Strategy *Strategy `json:"strategy,omitempty"` //  非必须，厂商通道策略
+	Strategy *Strategy `json:"strategy,omitempty"` // 非必须，默认值：{"strategy":{"default":1}}，厂商通道策略
 }
 
 // 厂商通道策略

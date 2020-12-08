@@ -33,10 +33,10 @@ func PushSingleByBatchAlias(ctx context.Context, config GeTuiConfig, token strin
 		return nil, err
 	}
 
-	var pushSingleResult *PushSingleBatchAliasResult
-	if err := json.Unmarshal([]byte(result), &pushSingleResult); err != nil {
+	var push *PushSingleBatchAliasResult
+	if err := json.Unmarshal([]byte(result), &push); err != nil {
 		return nil, err
 	}
 
-	return pushSingleResult, err
+	return push, err
 }

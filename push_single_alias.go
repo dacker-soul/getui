@@ -35,10 +35,10 @@ func PushSingleByAlias(ctx context.Context, config GeTuiConfig, token string, pa
 		return nil, err
 	}
 
-	var pushSingleResult *PushSingleAliasResult
-	if err := json.Unmarshal([]byte(result), &pushSingleResult); err != nil {
+	var push *PushSingleAliasResult
+	if err := json.Unmarshal([]byte(result), &push); err != nil {
 		return nil, err
 	}
 
-	return pushSingleResult, err
+	return push, err
 }

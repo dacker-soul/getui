@@ -35,10 +35,10 @@ func PushSingleByCid(ctx context.Context, config GeTuiConfig, token string, para
 		return nil, err
 	}
 
-	var pushSingleResult *PushSingleResult
-	if err := json.Unmarshal([]byte(result), &pushSingleResult); err != nil {
+	var push *PushSingleResult
+	if err := json.Unmarshal([]byte(result), &push); err != nil {
 		return nil, err
 	}
 
-	return pushSingleResult, err
+	return push, err
 }
