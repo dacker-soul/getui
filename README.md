@@ -1,8 +1,7 @@
 # 个推V2版本
 
 ## 前言
-由于个推没有Go的SDK，因此写个
-getui_test.go文件有各个方法的示例，方便各位快速上手
+由于个推没有Go的SDK，因此写个轮子，getui_test.go文件有各个方法的示例，方便各位快速上手
 
 ## 文件结构
 ```
@@ -35,7 +34,7 @@ getui
 ```
 推送消息内容分为两种：个推通道消息内容（PushMessage）和厂商通道消息内容（PushChannel）
 
-##个推通道消息内容（PushMessage）
+## 个推通道消息内容（PushMessage）
 
 PushMessage中的notification，transmission，revoke三选一，都填写报错
 
@@ -50,7 +49,7 @@ revoke：撤回消息时使用(仅支持撤回个推通道消息，消息撤回�
 
 **总结一下：个推消息通道，普通消息推送仅支持安卓系统，ios不行。纯透传消息不分系统，都可以。**
 
-##厂商通道消息内容（PushChannel）
+## 厂商通道消息内容（PushChannel）
 
 先说ios，ios的推送用官方的[APNS](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/PayloadKeyReference.html)
 
@@ -109,7 +108,7 @@ Ios建议填写2或者4
 
 安卓厂商通道比较简单，通知和纯透都有，二选一；并且厂商通道和个推通道可以同时设置
 
-##问题反馈
+## 问题反馈
 如果有疑问可以写issues，我会快速反馈
 
 
