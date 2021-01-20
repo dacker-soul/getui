@@ -36,9 +36,9 @@ getui
 
 ## 个推通道消息内容（PushMessage）
 
-PushMessage中的notification，transmission，revoke三选一，都填写报错
+PushMessage中的notification（个推消息），transmission（纯透消息），revoke（回退个推消息）三选一
 
-notification：仅支持安卓系统，iOS系统不展示个推通道下发的通知消息
+notification：个推消息，仅支持安卓系统，iOS系统不展示个推通道下发的通知消息
 
 transmission：纯透传消息内容，安卓和iOS均支持。
 
