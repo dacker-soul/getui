@@ -1,9 +1,10 @@
 // 创建消息体，并返回taskid，为批量推的前置步骤
-package getuiv2
+package list
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 创建消息体参数

@@ -1,9 +1,10 @@
 // 别名批量单送
-package getuiv2
+package single
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 别名批量单推参数

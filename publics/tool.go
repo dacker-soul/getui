@@ -1,5 +1,5 @@
 // 公共方法
-package getuiv2
+package publics
 
 import (
 	"bytes"

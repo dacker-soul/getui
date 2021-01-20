@@ -1,9 +1,10 @@
 // 别名单推
-package getuiv2
+package single
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 别名单推参数

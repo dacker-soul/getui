@@ -1,9 +1,10 @@
 // 查询定时任务 该接口支持在推送完定时任务之后，查看定时任务状态，定时任务是否发送成功。
-package getuiv2
+package mission
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 查询定时任务参数

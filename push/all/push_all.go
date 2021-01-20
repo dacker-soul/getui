@@ -1,9 +1,10 @@
 // 群推
-package getuiv2
+package all
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 群推参数

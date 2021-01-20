@@ -1,9 +1,10 @@
 // cid批量推送消息
-package getuiv2
+package single
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // cid批量单推参数

@@ -1,5 +1,5 @@
 // 公共常量、结构体等
-package getuiv2
+package publics
 
 const (
 	ApiUrl = "https://restapi.getui.com/v2/" // 个推开放平台接口前缀(BaseUrl)
@@ -49,7 +49,7 @@ type PublicResult struct {
 type Audience struct {
 	Cid           []string `json:"cid,omitempty"`             // cid数组，单推只能填一个cid，批量推可以填写多个（数组长度小于200）
 	Alias         []string `json:"alias,omitempty"`           // 别名数组，单推只能填一个别名，批量推可以填写多个（数组长度小于200）
-	Tag           []*Tag   `json:"tag,omitempty"`             // 推送条件
+	Tag           *[]Tag   `json:"tag,omitempty"`             // 推送条件
 	FastCustomTag string   `json:"fast_custom_tag,omitempty"` // 使用用户标签筛选目标用户
 }
 

@@ -1,9 +1,10 @@
 // 停止任务,对正处于推送状态，或者未接收的消息停止下发
-package getuiv2
+package mission
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 停止任务参数

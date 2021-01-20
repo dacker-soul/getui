@@ -1,9 +1,10 @@
 // 删除定时任务 用来删除还未下发的任务，删除后定时任务不再触发(距离下发还有一分钟的任务，将无法删除，后续可以调用停止任务接口)
-package getuiv2
+package mission
 
 import (
 	"context"
 	"encoding/json"
+	. "getui/publics"
 )
 
 // 删除定时任务参数

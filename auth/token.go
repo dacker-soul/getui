@@ -1,10 +1,22 @@
-// 获取token、删除token
-package getuiv2
+/*
+ * 鉴权API
+ *
+ * 注意：鉴权接口每分钟最大调用量为100次，每天最大调用量为10万次。
+ * token的有效期截止时间通过接口返回参数expire_time来标识，目前是接口调用时间+1天的毫秒时间戳。
+ * token过期后无法使用，开发者需要定时刷新。
+ * 为保证高可用，建议开发者在定时刷新的同时做被动刷新，即当调用业务接口返回错误码10001时调用获取token被动刷新。
+ *
+ * 包含两个方法：获取token、删除token
+ */
+
+//
+package auth
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
+	. "getui/publics"
 )
 
 type TokenParam struct {
@@ -25,13 +37,7 @@ type TokenResultData struct {
 	Token      string `json:"token"`
 }
 
-/*
- * token是个推开放平台全局唯一接口调用凭据，访问所有接口都需要此凭据，开发者需要妥善保管。
- * 注意：鉴权接口每分钟最大调用量为100次，每天最大调用量为10万次。
- * token的有效期截止时间通过接口返回参数expire_time来标识，目前是接口调用时间+1天的毫秒时间戳。
- * token过期后无法使用，开发者需要定时刷新。
- * 为保证高可用，建议开发者在定时刷新的同时做被动刷新，即当调用业务接口返回错误码10001时调用获取token被动刷新。
- */
+// 获取token
 func GetToken(ctx context.Context, config GeTuiConfig) (TokenResult, error) {
 	tokenResult := TokenResult{}
 	// 获取加密字符串和时间戳
