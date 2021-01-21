@@ -4,7 +4,7 @@ package mission
 import (
 	"context"
 	"encoding/json"
-	. "getui/publics"
+	"github.com/dacker-soul/getui/publics"
 )
 
 // 删除定时任务参数
@@ -14,18 +14,18 @@ type PushDelTaskParam struct {
 
 // 删除定时任务返回
 type PushDelTaskResult struct {
-	PublicResult
+	publics.PublicResult
 }
 
 // 删除定时任务
-func PushDelTask(ctx context.Context, config GeTuiConfig, token string, param *PushDelTaskParam) (*PushDelTaskResult, error) {
-	url := ApiUrl + config.AppId + "/task/schedule" + param.TaskId
+func PushDelTask(ctx context.Context, config publics.GeTuiConfig, token string, param *PushDelTaskParam) (*PushDelTaskResult, error) {
+	url := publics.ApiUrl + config.AppId + "/task/schedule" + param.TaskId
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := RestFulRequest(ctx, bodyByte, url, "DELETE", token)
+	result, err := publics.RestFulRequest(ctx, bodyByte, url, "DELETE", token)
 	if err != nil {
 		return nil, err
 	}

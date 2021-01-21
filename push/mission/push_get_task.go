@@ -4,7 +4,7 @@ package mission
 import (
 	"context"
 	"encoding/json"
-	. "getui/publics"
+	"github.com/dacker-soul/getui/publics"
 )
 
 // 查询定时任务参数
@@ -14,7 +14,7 @@ type PushGetTaskParam struct {
 
 // 查询定时任务返回
 type PushGetTaskResult struct {
-	PublicResult
+	publics.PublicResult
 	Data map[string]map[string]string `json:"data"`
 }
 
@@ -29,14 +29,14 @@ type PushGetTaskResult struct {
 // }
 
 // 停止任务
-func PushGetTask(ctx context.Context, config GeTuiConfig, token string, param *PushGetTaskParam) (*PushGetTaskResult, error) {
-	url := ApiUrl + config.AppId + "/task/schedule" + param.TaskId
+func PushGetTask(ctx context.Context, config publics.GeTuiConfig, token string, param *PushGetTaskParam) (*PushGetTaskResult, error) {
+	url := publics.ApiUrl + config.AppId + "/task/schedule" + param.TaskId
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := RestFulRequest(ctx, bodyByte, url, "GET", token)
+	result, err := publics.RestFulRequest(ctx, bodyByte, url, "GET", token)
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ package single
 import (
 	"context"
 	"encoding/json"
-	. "getui/publics"
+	"github.com/dacker-soul/getui/publics"
 )
 
 // 别名批量单推参数
@@ -16,20 +16,20 @@ type PushSingleBatchAliasParam struct {
 
 // 别名批量单推返回
 type PushSingleBatchAliasResult struct {
-	PublicResult
+	publics.PublicResult
 	Data map[string]map[string]string `json:"data"`
 }
 
 // 别名批量单推
-func PushSingleByBatchAlias(ctx context.Context, config GeTuiConfig, token string, param *PushSingleBatchAliasParam) (*PushSingleBatchAliasResult, error) {
+func PushSingleByBatchAlias(ctx context.Context, config publics.GeTuiConfig, token string, param *PushSingleBatchAliasParam) (*PushSingleBatchAliasResult, error) {
 
-	url := ApiUrl + config.AppId + "/push/single/batch/alias"
+	url := publics.ApiUrl + config.AppId + "/push/single/batch/alias"
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := RestFulRequest(ctx, bodyByte, url, "POST", token)
+	result, err := publics.RestFulRequest(ctx, bodyByte, url, "POST", token)
 	if err != nil {
 		return nil, err
 	}

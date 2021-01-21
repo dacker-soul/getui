@@ -4,7 +4,7 @@ package single
 import (
 	"context"
 	"encoding/json"
-	. "getui/publics"
+	"github.com/dacker-soul/getui/publics"
 )
 
 // cid批量单推参数
@@ -15,20 +15,20 @@ type PushSingleBatchCidParam struct {
 
 // cid批量单推返回
 type PushSingleBatchCidResult struct {
-	PublicResult
+	publics.PublicResult
 	Data map[string]map[string]string `json:"data"`
 }
 
 // cid批量单推
-func PushSingleByBatchCid(ctx context.Context, config GeTuiConfig, token string, param *PushSingleBatchCidParam) (*PushSingleBatchCidResult, error) {
+func PushSingleByBatchCid(ctx context.Context, config publics.GeTuiConfig, token string, param *PushSingleBatchCidParam) (*PushSingleBatchCidResult, error) {
 
-	url := ApiUrl + config.AppId + "/push/single/batch/cid"
+	url := publics.ApiUrl + config.AppId + "/push/single/batch/cid"
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := RestFulRequest(ctx, bodyByte, url, "POST", token)
+	result, err := publics.RestFulRequest(ctx, bodyByte, url, "POST", token)
 	if err != nil {
 		return nil, err
 	}
