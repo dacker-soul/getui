@@ -16,7 +16,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	. "getui/publics"
+	"github.com/dacker-soul/getui/publics"
 )
 
 type TokenParam struct {
@@ -27,7 +27,7 @@ type TokenParam struct {
 
 // Token返回结构
 type TokenResult struct {
-	PublicResult
+	publics.PublicResult
 	Data TokenResultData
 }
 
@@ -38,10 +38,10 @@ type TokenResultData struct {
 }
 
 // 获取token
-func GetToken(ctx context.Context, config GeTuiConfig) (TokenResult, error) {
+func GetToken(ctx context.Context, config publics.GeTuiConfig) (TokenResult, error) {
 	tokenResult := TokenResult{}
 	// 获取加密字符串和时间戳
-	signStr, timestamp := Signature(config.AppKey, config.MasterSecret)
+	signStr, timestamp := publics.Signature(config.AppKey, config.MasterSecret)
 
 	param := &TokenParam{
 		Sign:      signStr,
@@ -49,13 +49,13 @@ func GetToken(ctx context.Context, config GeTuiConfig) (TokenResult, error) {
 		AppKey:    config.AppKey,
 	}
 
-	url := ApiUrl + config.AppId + "/auth"
+	url := publics.ApiUrl + config.AppId + "/auth"
 	bodyByte, err := json.Marshal(param)
 	if err != nil {
 		return tokenResult, err
 	}
 
-	result, err := RestFulRequest(ctx, bodyByte, url, "POST", "")
+	result, err := publics.RestFulRequest(ctx, bodyByte, url, "POST", "")
 	if err != nil {
 		return tokenResult, err
 	}
@@ -68,11 +68,11 @@ func GetToken(ctx context.Context, config GeTuiConfig) (TokenResult, error) {
 }
 
 // 删除token，为防止token被滥用或泄露，开发者可以调用此接口主动使token失效
-func DelToken(ctx context.Context, token string, config GeTuiConfig) (PublicResult, error) {
-	publicResult := PublicResult{}
-	url := ApiUrl + config.AppId + "/auth/" + token
+func DelToken(ctx context.Context, token string, config publics.GeTuiConfig) (publics.PublicResult, error) {
+	publicResult := publics.PublicResult{}
+	url := publics.ApiUrl + config.AppId + "/auth/" + token
 	fmt.Println("url:", url)
-	result, err := RestFulRequest(ctx, []byte{}, url, "DELETE", "")
+	result, err := publics.RestFulRequest(ctx, []byte{}, url, "DELETE", "")
 	if err != nil {
 		return publicResult, err
 	}

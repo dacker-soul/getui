@@ -16,6 +16,15 @@ getui
     |--测试文件及其他
 
 ```
+
+## 快速开始
+```
+#厂商通道普通模板+个推通道普通模板
+#策略为4：先用厂商通道，失败后再用个推通道
+
+
+```
+
 ## 开发前读一读这里
 推送都包括：推送参数，推送方法，推送返回结果,主要功能都在推送参数上面。
 下面以单推为例子详细介绍（其他推送每个参数和方法里面都有详细注释）：
@@ -52,6 +61,8 @@ revoke：撤回消息时使用(仅支持撤回个推通道消息，消息撤回�
 ## 厂商通道消息内容（PushChannel）
 
 先说ios，ios的推送用官方的[APNS](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/PayloadKeyReference.html)
+
+ios想要用纯透模板，就不需要PushChannel的IosChannel参数，只需要填写PushMessage的Transmission
 
 ```
 // ios厂商通道消息
@@ -106,7 +117,8 @@ Ios建议填写2或者4
 总结一下：ios推送，同时配置了厂商通道和个推纯透模板，选择通道策略为4，则APNS没有成功，就走个推的纯透消息
 
 
-安卓厂商通道比较简单，通知和纯透都有，二选一；并且厂商通道和个推通道可以同时设置
+安卓厂商通道比较简单，通知和纯透都有，二选一；并且厂商通道和个推通道可以同时设置，然后再设置厂商通道策略，把各个厂商的通道值都设为4：表示该消息优先从厂商通道下发，若消息内容在厂商通道代发失败后会从个推通道下发。
+也可以不要PushChannel的AndroidChannel厂商通道，只设置个推的安卓推送，也就是PushMessage的Notification或者Transmission
 
 ## 问题反馈
 如果有疑问可以写issues，我会快速反馈

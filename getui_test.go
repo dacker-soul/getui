@@ -3,18 +3,18 @@ package getui
 import (
 	"context"
 	"encoding/json"
-	"getui/push/single"
+	"github.com/dacker-soul/getui/auth"
+	"github.com/dacker-soul/getui/publics"
+	"github.com/dacker-soul/getui/push/single"
 	"strconv"
 	"time"
 
-	"getui/auth"
-	. "getui/publics"
 	"github.com/alecthomas/assert"
 	"testing"
 )
 
 var (
-	Conf = GeTuiConfig{
+	Conf = publics.GeTuiConfig{
 		AppId:        "",
 		AppSecret:    "",
 		AppKey:       "",
@@ -37,10 +37,10 @@ func TestGetToken(t *testing.T) {
 
 // 测试-单次推送ByCid 厂商通道+纯透模板
 func TestPushSingleByCidA(t *testing.T) {
-	iosChannel := IosChannel{
+	iosChannel := publics.IosChannel{
 		Type: "",
-		Aps: &Aps{
-			Alert: &Alert{
+		Aps: &publics.Aps{
+			Alert: &publics.Alert{
 				Title: "卡是谁？",
 				Body:  "为什么我们每天都要打 TA ？",
 			},
@@ -55,15 +55,15 @@ func TestPushSingleByCidA(t *testing.T) {
 
 	singleParam := single.PushSingleParam{
 		RequestId: strconv.FormatInt(time.Now().UnixNano(), 10), // 请求唯一标识号
-		Audience: &Audience{ // 目标用户
+		Audience: &publics.Audience{ // 目标用户
 			Cid:           []string{Cid}, // cid推送数组
 			Alias:         nil,           // 别名送数组
 			Tag:           nil,           // 推送条件
 			FastCustomTag: "",            // 使用用户标签筛选目标用户
 		},
-		Settings: &Settings{ // 推送条件设置
+		Settings: &publics.Settings{ // 推送条件设置
 			TTL: 3600000, // 默认一小时，消息离线时间设置，单位毫秒
-			Strategy: &Strategy{ // 厂商通道策略，具体看public_struct.go
+			Strategy: &publics.Strategy{ // 厂商通道策略，具体看public_struct.go
 				Default: 1,
 				Ios:     4,
 				St:      1,
@@ -76,15 +76,15 @@ func TestPushSingleByCidA(t *testing.T) {
 			Speed:        100, // 推送速度，设置100表示：100条/秒左右，0表示不限速
 			ScheduleTime: 0,   // 定时推送时间，必须是7天内的时间，格式：毫秒时间戳
 		},
-		PushMessage: &PushMessage{
+		PushMessage: &publics.PushMessage{
 			Duration:     "", // 手机端通知展示时间段
 			Notification: nil,
 			Transmission: string(stringIos),
 			Revoke:       nil,
 		},
-		PushChannel: &PushChannel{
+		PushChannel: &publics.PushChannel{
 			Ios: &iosChannel,
-			Android: &AndroidChannel{Ups: &Ups{
+			Android: &publics.AndroidChannel{Ups: &publics.Ups{
 				Notification: nil,
 				TransMission: string(stringIos), // 透传消息内容，与notification 二选一
 			}},
@@ -96,12 +96,12 @@ func TestPushSingleByCidA(t *testing.T) {
 
 }
 
-// 测试-单次推送ByCid 厂商通道+个推通道
+// 测试-单次推送ByCid 厂商通道普通模板+个推通道普通模板
 func TestPushSingleByCidB(t *testing.T) {
-	iosChannel := IosChannel{
+	iosChannel := publics.IosChannel{
 		Type: "",
-		Aps: &Aps{
-			Alert: &Alert{
+		Aps: &publics.Aps{
+			Alert: &publics.Alert{
 				Title: "卡是谁啊？",
 				Body:  "为什么我们每天都要打 TA ？",
 			},
@@ -112,7 +112,7 @@ func TestPushSingleByCidB(t *testing.T) {
 		Multimedia:     nil,
 		ApnsCollapseId: "",
 	}
-	notification := Notification{
+	notification := publics.Notification{
 		Title:       "卡是谁啊？",
 		Body:        "为什么我们每天都要打 TA ？",
 		ClickType:   "startapp", // 打开应用首页
@@ -121,15 +121,15 @@ func TestPushSingleByCidB(t *testing.T) {
 
 	singleParam := single.PushSingleParam{
 		RequestId: strconv.FormatInt(time.Now().UnixNano(), 10), // 请求唯一标识号
-		Audience: &Audience{ // 目标用户
+		Audience: &publics.Audience{ // 目标用户
 			Cid:           []string{Cid}, // cid推送数组
 			Alias:         nil,           // 别名送数组
 			Tag:           nil,           // 推送条件
 			FastCustomTag: "",            // 使用用户标签筛选目标用户
 		},
-		Settings: &Settings{ // 推送条件设置
+		Settings: &publics.Settings{ // 推送条件设置
 			TTL: 3600000, // 默认一小时，消息离线时间设置，单位毫秒
-			Strategy: &Strategy{ // 厂商通道策略，具体看public_struct.go
+			Strategy: &publics.Strategy{ // 厂商通道策略，具体看public_struct.go
 				Default: 1,
 				Ios:     4,
 				St:      4,
@@ -142,15 +142,15 @@ func TestPushSingleByCidB(t *testing.T) {
 			Speed:        100, // 推送速度，设置100表示：100条/秒左右，0表示不限速
 			ScheduleTime: 0,   // 定时推送时间，必须是7天内的时间，格式：毫秒时间戳
 		},
-		PushMessage: &PushMessage{
+		PushMessage: &publics.PushMessage{
 			Duration:     "", // 手机端通知展示时间段
 			Notification: &notification,
 			Transmission: "",
 			Revoke:       nil,
 		},
-		PushChannel: &PushChannel{
+		PushChannel: &publics.PushChannel{
 			Ios: &iosChannel,
-			Android: &AndroidChannel{Ups: &Ups{
+			Android: &publics.AndroidChannel{Ups: &publics.Ups{
 				Notification: &notification,
 				TransMission: "", // 透传消息内容，与notification 二选一
 			}},
